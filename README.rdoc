@@ -25,3 +25,11 @@ file.  You'll then need to authorise the dconstructon app with twitter.  To do
 this run the script/authorise.rb script, following the instructions.  You'll be given
 an access token and secret which you should add to the application.yml.
 dconstruction application with this twitter application.
+
+== Twitter polling
+
+A rake task is used to poll for new tweets :
+
+rake dconstruct:poll
+
+This should be added to crond for automated polling.
