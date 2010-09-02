@@ -1,0 +1,24 @@
+<% AppConfig[:users].each do |u| %>
+  <% @tweets = Tweet.all(:conditions => {:sender => u[:twitter_username], :created_at => @start_time..@end_time}, :order => :created_at) %>
+  var <%= u[:twitter_username] %> = [
+    <% @tweets.each do |t| %>
+      { date: "<%= t.created_at.in_time_zone(AppConfig[:general][:tz]).iso8601.gsub(/\+\d\d:\d\d/,'') %>", rating: <%= t.score %>, note: "<%= t.body %>" },
+    <% end %>
+  ];
+<% end %>
+
+(function() {
+  var format = pv.Format.date("%y-%m-%dT%H:%M:%S");
+<% AppConfig[:users].each do |u| %>
+  <%= u[:twitter_username] %>.forEach(function(d) { d.date = format.parse(d.date); });
+<% end %>
+})();
+
+var events = <%= AppConfig[:schedule][:slots].to_json %>;
+var users = <%= AppConfig[:users].to_json %>;
+
+(function() {
+	var format = pv.Format.date("%y-%m-%dT%H:%M:%S");
+	events.forEach(function(d) { d["start"] = format.parse(d["start"]); });
+	events.forEach(function(d) { d["end"] = format.parse(d["end"]); });
+})();

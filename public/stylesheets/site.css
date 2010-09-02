@@ -1,0 +1,254 @@
+/* -------------------------------------------------------------- 
+
+Deconstructing dConstruct - 1.0 - 23/08/2010
+
+Title: Main presentation
+Author: andrew@rattlecentral.com
+
+-------------------------------------------------------------- */
+
+/* font sizes - ems
+
+0.071em; 1px
+0.143em; 2px
+0.214em; 3px
+0.286em; 4px
+0.357em; 5px
+0.429em; 6px
+0.500em; 7px
+0.571em; 8px
+0.643em; 9px
+0.714em; 10px
+
+
+font-size:0.786em; 11px
+font-size:0.857em; 12px
+font-size:0.929em; 13px
+font-size:1em; 14px;
+font-size:1.071em; 15px;
+font-size:1.143em; 16px;
+font-size:1.214em; 17px;
+font-size:1.286em; 18px
+font-size:1.357em; 19px
+font-size:1.429em; 20px
+font-size:1.714em; 24px
+font-size:2em; 28px
+
+----------------------------------------*/
+
+
+/* Body
+----------------------------------------------------------------*/
+
+body {
+	text-rendering:optimizeLegibility; 
+	font-family: Baskerville, "Baskerville old face", "Hoefler Text", Garamond, "Times New Roman", serif; 
+	font-size: 87.5%; /* 14px */
+	line-height: 1.4286; /* 20px baseline */
+	color: #333;
+	color: rgba(0,0,0,0.7); 
+	background: #ddd2c4;
+	}
+	
+	
+body * {font-size: 1em; line-height: inherit;}
+
+/* Misc.
+----------------------------------------------- */
+
+hr, .hide, p.support {display: none;}
+a img {border: none;}
+	
+
+abbr {border: none;}
+abbr[title="and"] {font-style: italic; text-transform: none; font-size: 12px;}
+
+.x-list {overflow: hidden;}
+.x-list li {float: left; margin-left: 10px}
+.x-list li:first-child {margin: 0;}
+
+a {color: rgba(0,0,0,1); text-decoration: none;}
+a:hover {text-decoration: underline;}
+
+p {margin: 0 0 1.5em 0;}
+
+
+/* Layout
+----------------------------------------------------------------*/
+
+article, aside, dialog, figure, footer, header, hgroup, nav, section, time {display : block;}
+
+.container {
+	position: relative;
+	width: 940px; 
+	margin: 0 auto;
+	padding: 20px 40px;
+	overflow: hidden;
+	background: #fafaf7;
+	}
+
+div { position:relative } 
+
+
+/* Easy Clearing - Not sure this is needed
+----------------------------------------------- */
+
+.clear:after, footer:after, header:after, nav:after, section:after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+	}
+* html .clear             { zoom: 1; } /* IE6 */
+*:first-child+html .clear { zoom: 1; } /* IE7 */
+
+
+/* Headings
+----------------------------------------------------------------*/
+h1,h2,h3,h4,h5,h6 {}
+
+header h2 {color: rgba(0,0,0,0.7);}
+section h3, footer h3 {
+	text-align: center;
+	background: url(../images/divide.png) repeat-x center left;
+	text-transform: uppercase;
+	font-size:0.714em;
+	letter-spacing: 2px;
+	margin-bottom: 2.100em;
+	}
+	
+section h3 span, footer h3 span {background: #fafaf7; padding: 0 10px;}
+
+h5 {text-transform: uppercase; letter-spacing: 2px; font-size: 0.714em;}
+
+h2 {font-size: 1.5em;}
+
+/* Header
+----------------------------------------------------------------*/
+
+header {margin-bottom: 2em; text-align: center;}
+hgroup {}
+header h1 {
+	font-size: 3em;
+	letter-spacing: -0.071em;
+	color: rgba(0,0,0,0.8);
+	font-weight: 400;
+	}
+	
+header p {color: #999999}
+	
+header h1 span {text-transform: none; letter-spacing: 0; font-style: italic;}
+
+
+/* The Graph
+----------------------------------------------------------------*/
+
+#graph {margin-bottom: 2em; }
+#graph p {text-align: center; margin-top: 1em;}
+
+/* Averages
+----------------------------------------------------------------*/
+
+section#average {margin-bottom: 1em;}
+section#average li {
+	float: left;
+	width: 220px;
+	margin: 0 20px 1em 0;
+	}
+section#average li h4 {font-weight: bold; display: inline-block;}
+section#average li em {margin-bottom: 0.5em;}
+section#average p {margin-bottom: 0;}
+section#average p span {color: rgba(0,0,0,0.5); }
+section#average p span strong {font-weight: normal; font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;}
+
+section#average p.average {overflow: hidden;}
+div.value {width: 100%; height: 3px; background: rgba(0,0,0,0.1); position:relative; margin: 0.5em 0; }
+section#average p.average span.label {foat: left; color: rgba(0,0,0,0.7); }
+div.value meter span.endpoint {position: absolute; height: 10px; background: #bdbdbb; width: 1px; right: 0; top: -4px;}
+
+meter {
+	display: block;
+	background: rgba(61,141,168,0.7);
+	height: 3px;
+	position: relative;
+	}
+	
+/* Not using the average score counter - positioned right of meter bar
+meter span {position: absolute; right: -25px; top: -9px; color: rgba(0,0,0,0.7); font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;}
+
+*/
+
+/*
+meter[value*="0.1"] {width: 10%}
+meter[value*="0.2"] {width: 20%}
+meter[value*="0.3"] {width: 30%}
+meter[value*="0.4"] {width: 40%}
+meter[value*="0.5"] {width: 50%}
+meter[value*="0.6"] {width: 60%}
+meter[value*="0.7"] {width: 70%}
+meter[value*="0.8"] {width: 80%}
+meter[value*="0.9"] {width: 90%}
+meter[value*="1"] {width: 100%}
+*/
+
+
+section#average li:nth-child(4n) {margin-right: 0;}
+#monkeyhelpr meter, #monkeyhelpr div.value meter span.endpoint {background: #339fcc}
+#jamesb meter, #jamesb div.value meter span.endpoint {background: #9bcc33}
+#frankieroberto meter, #frankieroberto div.value meter span.endpoint {background: #cc5033;}
+#andrewpendrick meter, #andrewpendrick div.value meter span.endpoint {background: #d892c5;}
+
+
+
+/* Footer
+----------------------------------------------------------------*/
+
+footer {
+	clear: both;
+  	text-align: center;
+  	}
+  	
+footer p {margin: 0; font-style: italic;}
+footer ul {float: left; margin: 0 auto;}
+
+
+p.credit {
+	
+	}
+
+/* Media Queries
+----------------------------------------------------------------*/
+
+/*layouts smaller than 600px, iPhone and mobiles*/
+@media handheld and (max-width: 480px), screen and (max-device-width: 480px), screen and (max-width: 600px)  {
+
+	}
+
+/*layouts larger than 900px*/	
+@media screen and (min-width: 920px) {
+	
+
+}
+
+/*layouts larger than 900px*/
+@media screen and (min-width: 920px) {
+	
+}
+
+@media screen and (min-width: 1500px) {
+	
+	}
+	
+/*Just iPhone*/
+@media only screen and (max-device-width: 480px) {
+	
+}
+	
+/*iPad styles*/
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+		
+	}
+
+

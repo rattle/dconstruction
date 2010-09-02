@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" id="deconstructing">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		
+		<meta name="description" content="<%= AppConfig[:page][:meta][:description] %>" />
+		<meta name="author" content="<%= AppConfig[:page][:meta][:author] %>" />
+		<meta name="Copyright" content="<%= AppConfig[:page][:meta][:copyright] %>" />
+
+		
+		<title><%= AppConfig[:page][:header][:page_title] %></title>
+		<link rel="icon" type="image/png" href="<%= AppConfig[:page][:favicon] %>">
+		
+		<link rel="stylesheet" href="stylesheets/screen.css" type="text/css" media="screen, projection" />
+		<!--[if lte IE 8]><link rel="stylesheet" type="text/css" href="stylesheets/ie.css" media="screen"><![endif]-->
+
+		<!-- /end stylesheets -->
+		
+		<script type="text/javascript" src="javascripts/protovis-r3.2.js"></script>
+    	<script type="text/javascript" src="data"></script>
+		<script type="text/javascript" src="javascripts/jquery-1.3.2.min.js" charset="utf-8"></script>
+		<!--[if lte IE 8]><script type="text/javascript" src="javascripts/html5.js" charset="utf-8"></script><![endif]-->
+		
+		
+	</head>
+	
+	<body class="home">
+	
+		<div class="container">
+			<header role="banner">
+				<hgroup>
+					<h1><%= AppConfig[:page][:header][:title] %></h1>
+					<h2><%= AppConfig[:page][:header][:subtitle] %></h2>
+				</hgroup>
+				
+			</header>
+			<!-- /end header -->
+			
+			
+			<section id="graph">
+				<h3><span>The Graph</span></h3>
+				
+				<p class="support">Sorry, but this application makes use of an SVG Graphing solution that isn't supported by your browser. Try <a href="http://www.getfirefox.com">Firefox</a> or <a href="http://google.com/chrome">Google Chrome</a>.</p>
+				<div id="fig">
+				<script type="text/javascript+protovis">
+				
+				// Declare a bunch of initial variables.
+				var w = 910,
+				    h = 250,
+						format = pv.Format.date("%y-%m-%d %H:%M:%S"),
+						start = format.parse("<%= DateTime.parse(AppConfig[:schedule][:start]).strftime('%Y-%m-%d %H:%M:%S') %>"),
+						end = format.parse("<%= DateTime.parse(AppConfig[:schedule][:end]).strftime('%Y-%m-%d %H:%M:%S') %>"),
+				    x = pv.Scale.linear([start, end]).range(0, w)
+						xx = pv.Scale.linear([start, end]).range(w, 0)  // reversed scale
+				    y = pv.Scale.linear(-0.5, 10.5).range(0, h),
+						time_scale = pv.Scale.linear([start.getHours(), end.getHours()]).range(0, w),
+				    //fill = pv.colors("#339fcc", "#9bcc33", "#cc5033", "#d892c5"),
+				    format = pv.Format.date("%b");
+				
+				// Create the main Panel object
+				var vis = new pv.Panel()
+					.def("i", -1)				//  the 'i' variable is used to track which dot is active.
+					.def("j", -1)				//  the 'j' variable is used to track which bar is active.
+				    .width(w)
+				    .height(h)
+				    .margin(5)
+				    .right(15)
+				    .top(35)
+				    .bottom(68)
+						.left(15);
+						
+				
+				// Add the schedule
+				var bar = vis.add(pv.Bar)
+					.data(events)	
+					.bottom(0)
+			    .left(function(d) x(d["start"]))
+			    .right(function(d) xx(d["end"]))			
+					.fillStyle(function(d) { if (vis.j() == this.index) {return "#f4f4e2"} else { return "#fafaf7" }})											
+					.event("mouseover", function() vis.j(this.index));
+
+
+				// Add the event title
+				bar.add(pv.Label)
+					.data(events)
+			    .bottom(-50)
+			    .left(457)
+			    .textAlign("center")
+			    .textBaseline("top")
+					.text(function(d) {  if (d["speaker"]) { return d["speaker"] + " - " + d["title"] } else { return d["title"]} })
+					.font("italic 14px Baskerville, Baskerville old face, Hoefler Text, Garamond, Times New Roman, serif")
+					.textStyle("rgba(0,0,0,0.6)")
+					.visible(function() vis.j() == this.index);
+																								
+				// create and add the vertical lines
+				vis.add(pv.Rule)
+			    .data(time_scale.ticks())
+			    .left(time_scale)
+					.height(10)
+					.bottom(-10)
+			    .strokeStyle("rgba(0,0,0,0.2)")
+
+				// Add label at the bottom
+				  .add(pv.Label)
+					.bottom(-15)	
+					.textBaseline("top")
+					.textAlign("center")
+					.textStyle("rgba(0,0,0,0.8)")
+					.font("12px Gill sans, Helvetica, sans-serif")
+					.text(function(d) d + ":00" )
+					;
+					
+				// create and add horizontal lines
+					vis.add(pv.Rule)
+					.bottom(y)
+			    .strokeStyle("rgba(0,0,0,0.2)");
+				
+				// create and add the Panel object
+				vis.add(pv.Panel)
+			    .data(["rating"])
+					.def("i", -1)		
+				
+				// add the Line objects
+                <% AppConfig[:users].each do |u| %>
+				  .add(pv.Line)
+				    .data(<%= u[:twitter_username] %>)
+				    .left(function(d) x(d.date))
+				    .bottom(function(d, t) y(d[t]))
+				    .lineWidth(2)
+				    .strokeStyle("<%= u[:colour] %>")
+                <% end %>
+
+                // Add the dots
+                <% AppConfig[:users].each do |u| %>
+                .add(pv.Dot)
+                    .data(<%=  u[:twitter_username] %>)
+                    .visible(true)
+                    .left(function(d) x(d.date))
+                .bottom(function(d, t) y(d[t]))
+                    .size(10)
+                    .strokeStyle("<%= u[:colour] %>")
+                    .lineWidth(2)
+                    .shape("circle")
+                    .event("mouseover", function() vis.i("<%= u[:name] %>" + this.index))
+                .event("mouseout", function() vis.i(-1))
+                    .fillStyle(function(d) { if (vis.i() == ("<%= u[:name] %>" + this.index)) { return "<%= u[:colour] %>"} else { return "white"}})
+                 <% end %>
+				
+				// Now add the labels.
+                <% AppConfig[:users].each do |u| %>
+				.add(pv.Label)
+					.data(<%=  u[:twitter_username] %>)
+					.def("person", "<%= u[:name] %>")
+				    .textStyle("rgba(0,0,0,0.6)")
+					.size(0)
+					//.left(function(d) x(d.date))
+					.left(w / 2)
+			        .top(-20)
+					.textAlign("center")
+					//.bottom(function(d, t) y(d[t]) - 5)
+					.text(function(d) this.person() +  ': "' + d.note + '"')
+					.font("14px Baskerville, Baskerville old face, Hoefler Text, Garamond, Times New Roman, serif")
+					.visible(function() vis.i() == (this.person() + this.index))				
+                <% end %>
+							
+				vis.render();
+				
+				    </script>
+				  </div>
+			</section>
+			
+			<section id="average">
+				<h3><span>The Team</span></h3>
+				
+				<ul>
+                  <% AppConfig[:users].each do |u| %>
+					<li id="<%= u[:twitter_username] %>">
+						<h4><a href="<%= u[:website] %>"><%= u[:name] %></a></h4>
+						<em class="role"><%= u[:role] %></em>
+                        <% all = Tweet.find(:all, :conditions => ['sender = ? AND created_at>= ? AND created_at <=?', u[:twitter_username], @start_time, @end_time]) %>
+                        <% average = all.length > 0 ? all.inject(0){|sum,item| sum + item.score} / all.length : 0 %>
+						
+						<div class="value"><meter min="0" max="10" value="<%= "%.1f" % (average/10) %>" style="width: <%= (average * 10).to_i %>%"><% if average > 0 %><% content_tag("span", "%.1f" % average) %><% end %> <span class="endpoint"></span></meter></div>
+						
+                        <% high = low = nil %>
+                        <% if Tweet.count(:conditions => ['sender = ?', u[:twitter_username]]) > 1 %>
+                          <% high = speaker_at(Tweet.find(:first, :conditions => ['sender = ? AND created_at>= ? AND created_at <=?', u[:twitter_username], @start_time, @end_time], :order => 'score DESC')) %>
+                          <% low =  speaker_at(Tweet.find(:first, :conditions => ['sender = ? AND created_at>= ? AND created_at <=?', u[:twitter_username], @start_time, @end_time], :order => 'score ASC')) %>
+                          <%# high = low = nil if high == low %>
+                        <% end %>
+						<p>High: <span><%= high %></span></p>
+						<p>Low: <span><%= low %></span></p>
+					</li>
+                    <% end %>
+                    
+           		</ul>
+			</section>
+				
+			<footer>
+				<h3><span>Colophon</span></h3>
+				<p><%= AppConfig[:page][:footer][:colophon] %></p>
+			</footer>	
+			
+		</div>
+		<!-- /end container -->
+		
+        <% if RAILS_ENV == "production" %>
+        <script type="text/javascript">
+
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', '<%= AppConfig[:page][:analytics_id] %>']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+
+        </script>
+        <% end %>
+    </body>
+	
+</html>

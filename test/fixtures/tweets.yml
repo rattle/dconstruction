@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  tid: 1
+  sender: MyText
+  body: MyText
+
+two:
+  tid: 1
+  sender: MyText
+  body: MyText

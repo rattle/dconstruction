@@ -1,0 +1,27 @@
+== dconstruction
+
+dconstruction allows you to graph things over the course of a day via twitter.
+It was originally built by Rattle for measuring their engagement at dConstruct 2010 -
+http://dconstruct2010.rattlecentral.com
+
+It allows a number of pre-defined twitter users to direct message a twitter account with a score
+and an associated comment e.g.
+
++8 code released
+
+== Installation
+
+git clone git://
+cp database.example database.yml
+rake gems:install
+cp application.example application.yml
+
+== OAuth Setup
+
+In order to setup your own instance of dconstruction, you'll need to create a
+twitter 'application' at http://twitter.com/apps (ensure you tick the 'authentication
+checkbox too).  Add the consumer key and secret  information to the application.yml
+file.  You'll then need to authorise the dconstructon app with twitter.  To do
+this run the script/authorise.rb script, following the instructions.  You'll be given
+an access token and secret which you should add to the application.yml.
+dconstruction application with this twitter application.

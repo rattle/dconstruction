@@ -1,0 +1,41 @@
+/* -------------------------------------------------------------- 
+
+Deconstructing dConstruct - 1.0 - 23/08/2010
+
+Title: Layout Grid Stylesheet
+Author: andrew@rattlecentral.com
+
+-------------------------------------------------------------- */
+
+
+article, aside, dialog, figure, footer, header, hgroup, nav, section, time {display : block;}
+
+.container {
+	position: relative;
+	width: 940px; 
+	margin: 40px auto;
+	padding: 40px;
+	overflow: hidden;
+	-moz-border-radius:5px 5px 5px 5px;
+	-moz-box-shadow:1px 1px 7px rgba(153, 153, 153, 0.2);
+	background: #fafaf7;
+	}
+
+div { position:relative } 
+
+
+
+
+/* Easy Clearing
+----------------------------------------------- */
+
+.clear:after, footer:after, header:after, nav:after, section:after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+	}
+* html .clear             { zoom: 1; } /* IE6 */
+*:first-child+html .clear { zoom: 1; } /* IE7 */
