@@ -5,7 +5,11 @@ module ApplicationHelper
     return nil if tweet.nil?
     created_at = tweet.created_at
     AppConfig[:schedule][:slots].each do |s|
-      if created_at >= DateTime.parse(s[:start]) and created_at <= DateTime.parse(s[:end])
+
+      start_time = DateTime.parse(s[:start])
+      end_time = DateTime.parse(s[:end])
+
+      if created_at >= start_time and created_at <= end_time
         if s[:speaker]
           return s[:speaker]
         else

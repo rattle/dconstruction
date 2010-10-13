@@ -84,7 +84,7 @@ article, aside, dialog, figure, footer, header, hgroup, nav, section, time {disp
 	margin: 0 auto;
 	padding: 20px 40px;
 	overflow: hidden;
-	background: #fafaf7;
+	background: #FAFAF7;
 	}
 
 div { position:relative } 
@@ -164,42 +164,41 @@ section#average p span {color: rgba(0,0,0,0.5); }
 section#average p span strong {font-weight: normal; font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;}
 
 section#average p.average {overflow: hidden;}
-div.value {width: 100%; height: 3px; background: rgba(0,0,0,0.1); position:relative; margin: 0.5em 0; }
-section#average p.average span.label {foat: left; color: rgba(0,0,0,0.7); }
-div.value meter span.endpoint {position: absolute; height: 10px; background: #bdbdbb; width: 1px; right: 0; top: -4px;}
 
-meter {
-	display: block;
-	background: rgba(61,141,168,0.7);
+div.value meter {height: 3px; width: 100%;}
+
+
+div.value {width: 100%; height: 3px; background: rgba(0,0,0,0.1); position:relative; margin: 0.5em 0; }
+section#average p.average span.label {color: rgba(0,0,0,0.7); }
+div.value span.endpoint {position: absolute; height: 10px; background: #bdbdbb; width: 1px; right: 0; top: -4px;}
+
+/*
+meter {display: block; height: 3px; position: relative;}
+*/
+	
+span.meter	{
 	height: 3px;
+	display: block;
 	position: relative;
+	background: rgba(0,0,0,0.1);
 	}
+
 	
 /* Not using the average score counter - positioned right of meter bar
 meter span {position: absolute; right: -25px; top: -9px; color: rgba(0,0,0,0.7); font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;}
-
-*/
-
-/*
-meter[value*="0.1"] {width: 10%}
-meter[value*="0.2"] {width: 20%}
-meter[value*="0.3"] {width: 30%}
-meter[value*="0.4"] {width: 40%}
-meter[value*="0.5"] {width: 50%}
-meter[value*="0.6"] {width: 60%}
-meter[value*="0.7"] {width: 70%}
-meter[value*="0.8"] {width: 80%}
-meter[value*="0.9"] {width: 90%}
-meter[value*="1"] {width: 100%}
 */
 
 
 section#average li:nth-child(4n) {margin-right: 0;}
-#monkeyhelpr meter, #monkeyhelpr div.value meter span.endpoint {background: #339fcc}
-#jamesb meter, #jamesb div.value meter span.endpoint {background: #9bcc33}
-#frankieroberto meter, #frankieroberto div.value meter span.endpoint {background: #cc5033;}
-#andrewpendrick meter, #andrewpendrick div.value meter span.endpoint {background: #d892c5;}
 
+/* Removing need for list item and twitter username to determine colour of graph line and marker
+
+#monkeyhelpr span.meter, #monkeyhelpr div.value span.endpoint {background: #339fcc}
+#jamesb span.meter, #jamesb div.value span.endpoint {background: #9bcc33}
+#frankieroberto span.meter, #frankieroberto div.value span.endpoint {background: #cc5033;}
+#andrewpendrick span.meter, #andrewpendrick div.value span.endpoint {background: #d892c5;}
+
+*/
 
 
 /* Footer

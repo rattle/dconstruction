@@ -78,7 +78,7 @@
 					.bottom(0)
 			    .left(function(d) x(d["start"]))
 			    .right(function(d) xx(d["end"]))			
-					.fillStyle(function(d) { if (vis.j() == this.index) {return "#f4f4e2"} else { return "#fafaf7" }})											
+					.fillStyle(function(d) { if (vis.j() == this.index) {return "#f4f4e2"} else { return "#fafaf7" }})										
 					.event("mouseover", function() vis.j(this.index));
 
 
@@ -166,7 +166,13 @@
                 <% end %>
 							
 				vis.render();
-				
+
+                // Set the colours for the scores
+                <% AppConfig[:users].each do |u| %>
+                $('#<%= u[:twitter_username] %> div.value span.endpoint').css('background', '<%=  u[:colour] %>');
+                $('#<%= u[:twitter_username] %> span.meter').css('background', '<%=  u[:colour] %>');
+                <% end %>
+                
 				    </script>
 				  </div>
 			</section>
@@ -176,13 +182,15 @@
 				
 				<ul>
                   <% AppConfig[:users].each do |u| %>
-					<li id="<%= u[:twitter_username] %>">
+					<li id="<%= u[:twitter_username] %>" class="player">
 						<h4><a href="<%= u[:website] %>"><%= u[:name] %></a></h4>
 						<em class="role"><%= u[:role] %></em>
                         <% all = Tweet.find(:all, :conditions => ['sender = ? AND created_at>= ? AND created_at <=?', u[:twitter_username], @start_time, @end_time]) %>
                         <% average = all.length > 0 ? all.inject(0){|sum,item| sum + item.score} / all.length : 0 %>
+					
+	
+						<div class="value"><span class="meter" style="width: <%= (average * 10).to_i %>%"><% content_tag("span", ((average * 10).to_i.to_s + "%")) %> <span class="endpoint"></span></span></div>
 						
-						<div class="value"><meter min="0" max="10" value="<%= "%.1f" % (average/10) %>" style="width: <%= (average * 10).to_i %>%"><% if average > 0 %><% content_tag("span", "%.1f" % average) %><% end %> <span class="endpoint"></span></meter></div>
 						
                         <% high = low = nil %>
                         <% if Tweet.count(:conditions => ['sender = ?', u[:twitter_username]]) > 1 %>

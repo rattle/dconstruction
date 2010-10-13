@@ -7,7 +7,7 @@ class TwitterMessages
       oauth.authorize_from_access(c[:oauth][:access][:token], c[:oauth][:access][:secret])
       twitter = Twitter::Base.new(oauth)
       twitter.direct_messages.each do |tweet|
-        if c[:users].find{ |u| u[:twitter_username] == tweet.sender.screen_name }
+        if c[:users].find{ |u| u[:twitter_username] =~ /^#{tweet.sender.screen_name}$/i }
           cstart = Time.zone.parse(c[:schedule][:start]).in_time_zone(c[:general][:tz])
           cend = Time.zone.parse(c[:schedule][:end]).in_time_zone(c[:general][:tz])
           created_at = Time.zone.parse(tweet.created_at)

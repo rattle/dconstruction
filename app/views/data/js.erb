@@ -2,7 +2,7 @@
   <% @tweets = Tweet.all(:conditions => {:sender => u[:twitter_username], :created_at => @start_time..@end_time}, :order => :created_at) %>
   var <%= u[:twitter_username] %> = [
     <% @tweets.each do |t| %>
-      { date: "<%= t.created_at.in_time_zone(AppConfig[:general][:tz]).iso8601.gsub(/\+\d\d:\d\d/,'') %>", rating: <%= t.score %>, note: "<%= t.body %>" },
+      { date: <%= t.created_at.in_time_zone(AppConfig[:general][:tz]).iso8601.gsub(/\+\d\d:\d\d/,'').to_json %>, rating: <%= t.score %>, note: <%= t.body.gsub(/"/,'').to_json %> },
     <% end %>
   ];
 <% end %>
